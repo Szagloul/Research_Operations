@@ -1,8 +1,7 @@
 import numpy as np
 from scipy.optimize import linprog
 
-
-c = [30, 30, 30, 28, 28, 28, 0.90, 0.90, 0.90, 0.75, 0.75, 0.75]
+c = [30, 30, 30, 28, 28, 28, 0.9, 0.9, 0.9, 0.75, 0.75, 0.75]
 
 Aeq = [
     # A1 - I1 = 500
@@ -24,24 +23,21 @@ Aeq = [
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1],
 ]
 
-Beq = [500, 500, 750, 1000, 1200, 1200]
+Beq = [500, 5000, 750, 1000, 1200, 1200]
 
 
 Aub = [
     # (4/3)A1 + B1 <= 3000 (June Capacity)
-    [4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [.75, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     # (4/3)A2 + B2 <= 3500 (July Capacity)
-    [0, 4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, .75, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
     # (4/3)A3 + B3 <= 3000 (August Capacity)
-    [0, 0, 4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, .75, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 ]
 
 Bub = [3000, 3500, 3000]
 
-# Variable bounds (all variables >= 0)
-bounds = [(0, None) for _ in range(12)]
-
-res = linprog(c, A_ub=Aub, b_ub=Bub, A_eq=Aeq, b_eq=Beq, bounds=bounds, method="highs")
+res = linprog(c, A_ub=Aub, b_ub=Bub, A_eq=Aeq, b_eq=Beq, method="highs")
 
 if res.success:
     print("Optimization successful!")
