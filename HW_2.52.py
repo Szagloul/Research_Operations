@@ -41,10 +41,10 @@ res = linprog(c, A_ub=Aub, b_ub=Bub, A_eq=Aeq, b_eq=Beq, method="highs")
 
 if res.success:
     print("Optimization successful!")
-    print(f"Optimal production for A (June, July, Aug): {res.x[0]:.2f}, {res.x[1]:.2f}, {res.x[2]:.2f}")
-    print(f"Optimal production for B (June, July, Aug): {res.x[3]:.2f}, {res.x[4]:.2f}, {res.x[5]:.2f}")
-    print(f"Ending inventory for A (June, July, Aug): {res.x[6]:.2f}, {res.x[7]:.2f}, {res.x[8]:.2f}")
-    print(f"Ending inventory for B (June, July, Aug): {res.x[9]:.2f}, {res.x[10]:.2f}, {res.x[11]:.2f}")
+    print(f"Optimal production for A (June, July, Aug): {res.x[0]:.1f}, {res.x[1]:.1f}, {res.x[2]:.1f}")
+    print(f"Optimal production for B (June, July, Aug): {res.x[3]:.1f}, {res.x[4]:.1f}, {res.x[5]:.1f}")
+    print(f"Ending inventory for A (June, July, Aug): {res.x[6]:.1f}, {res.x[7]:.1f}, {res.x[8]:.1f}")
+    print(f"Ending inventory for B (June, July, Aug): {res.x[9]:.1f}, {res.x[10]:.1f}, {res.x[11]:.1f}")
     print(f"Minimum total cost: ${res.fun:.2f}")
 else:
     print("Optimization failed:", res.message)
