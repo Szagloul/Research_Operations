@@ -1,8 +1,7 @@
 import numpy as np
 from scipy.optimize import linprog
 
-
-c = [30, 30, 30, 28, 28, 28, 0.90, 0.90, 0.90, 0.75, 0.75, 0.75]
+c = [30, 30, 30, 28, 28, 28, 0.9, 0.9, 0.9, 0.75, 0.75, 0.75]
 
 Aeq = [
     # A1 - I1 = 500
@@ -28,12 +27,12 @@ Beq = [500, 5000, 750, 1000, 1200, 1200]
 
 
 Aub = [
-    # (4/3)A1 + B1 <= 3000 (June Capacity)
-    [.75, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-    # (4/3)A2 + B2 <= 3500 (July Capacity)
-    [0, .75, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-    # (4/3)A3 + B3 <= 3000 (August Capacity)
-    [0, 0, .75, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+
+    [4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+
+    [0, 4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+
+    [0, 0, 4 / 3, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 ]
 
 Bub = [3000, 3500, 3000]
@@ -42,10 +41,10 @@ res = linprog(c, A_ub=Aub, b_ub=Bub, A_eq=Aeq, b_eq=Beq, method="highs")
 
 if res.success:
     print("Optimization successful!")
-    print(f"Optimal production for A (June, July, Aug): {res.x[0]:.2f}, {res.x[1]:.2f}, {res.x[2]:.2f}")
-    print(f"Optimal production for B (June, July, Aug): {res.x[3]:.2f}, {res.x[4]:.2f}, {res.x[5]:.2f}")
-    print(f"Ending inventory for A (June, July, Aug): {res.x[6]:.2f}, {res.x[7]:.2f}, {res.x[8]:.2f}")
-    print(f"Ending inventory for B (June, July, Aug): {res.x[9]:.2f}, {res.x[10]:.2f}, {res.x[11]:.2f}")
+    print(f"Optimal production for A (June, July, Aug): {res.x[0]:.1f}, {res.x[1]:.1f}, {res.x[2]:.1f}")
+    print(f"Optimal production for B (June, July, Aug): {res.x[3]:.1f}, {res.x[4]:.1f}, {res.x[5]:.1f}")
+    print(f"Ending inventory for A (June, July, Aug): {res.x[6]:.1f}, {res.x[7]:.1f}, {res.x[8]:.1f}")
+    print(f"Ending inventory for B (June, July, Aug): {res.x[9]:.1f}, {res.x[10]:.1f}, {res.x[11]:.1f}")
     print(f"Minimum total cost: ${res.fun:.2f}")
 else:
     print("Optimization failed:", res.message)
